@@ -1,5 +1,9 @@
 package scrap.heap.refactor;
 
+import scrap.heap.refactor.party.Balloon;
+import scrap.heap.refactor.party.Cake;
+import scrap.heap.refactor.party.BirthdayParty;
+
 public class App {
     public String getGreeting() {
         return "Hello world.";
@@ -7,32 +11,66 @@ public class App {
 
     public static void main(String[] args) {
 
-         //Place birthday party orders
-         order("red", "mylar", "4", "chocolate", "chocolate", "circle", "large", "brown" );
-         order("blue", "latex", "7", "Vanilla", "chocelate", "square", "med", "brown" );
-         order("yellow", "mylar", "4", "vanilla", "vanilla", "square", "small", "yellow" );
+        App app = new App();
 
+        System.out.println(app.birthdayPartyOrder(1));
+
+        System.out.println(app.birthdayPartyOrder(2));
+
+        System.out.println(app.birthdayPartyOrder(3));
     }
 
-    private static void order(String balloonColor, String material, String number, String flavor, String frostingFlavor, String shape, String size, String cakeColor){
+    public String birthdayPartyOrder(int number) {
+        Balloon balloon = null;
+        Cake cake = null;
 
-        orderBalloons(balloonColor, material, number);
+        switch(number) {
+            case 1:
+                balloon = new Balloon.Builder()
+                        .color(Balloon.Color.RED).material(Balloon.Material.MYLAR)
+                        .count(4).build();
 
-        orderCake(frostingFlavor, flavor, shape, size, cakeColor);
+                cake = new Cake.Builder()
+                        .flavor(Cake.Flavor.CHOCOLATE)
+                        .frostingFlavor(Cake.FrostingFlavor.CHOCOLATE)
+                        .shape(Cake.Shape.CIRCLE)
+                        .size(Cake.Size.LARGE)
+                        .color(Cake.Color.BROWN)
+                        .build();
+                break;
+            case 2:
+                balloon = new Balloon.Builder()
+                        .color(Balloon.Color.BLUE)
+                        .material(Balloon.Material.LATEX)
+                        .count(7)
+                        .build();
+
+                cake = new Cake.Builder()
+                        .flavor(Cake.Flavor.VANILLA)
+                        .frostingFlavor(Cake.FrostingFlavor.CHOCOLATE)
+                        .shape(Cake.Shape.SQUARE)
+                        .size(Cake.Size.MED)
+                        .color(Cake.Color.BROWN)
+                        .build();
+                break;
+            case 3:
+                balloon = new Balloon.Builder()
+                        .color(Balloon.Color.YELLOW)
+                        .material(Balloon.Material.MYLAR)
+                        .count(4)
+                        .build();
+
+                cake = new Cake.Builder()
+                        .flavor(Cake.Flavor.VANILLA)
+                        .frostingFlavor(Cake.FrostingFlavor.CHOCOLATE)
+                        .shape(Cake.Shape.SQUARE)
+                        .size(Cake.Size.SMALL)
+                        .color(Cake.Color.YELLOW)
+                        .build();
+                break;
+        }
+        BirthdayParty birthdayParty = new BirthdayParty.Builder().ballon(balloon).cake(cake).order();
+
+        return birthdayParty.getDescription();
     }
-
-    private static void orderBalloons(String balloonColor, String material, String number){
-
-        //for the purposes of this exercise, pretend this method works and adds balloons to the order
-        System.out.println("Balloons ordered; " + balloonColor + ", " + material  + ", " + number);
-
-    }
-
-    private static void orderCake(String flavor, String frostingFlavor, String shape, String size, String cakeColor){
-
-        //for the purposes of this exercise, pretend that this method adds a cake to the order
-        System.out.println("cake ordered; " + flavor + ", " + frostingFlavor  + ", " + shape + ", " + size + ", " + cakeColor);
-
-    }
-
 }

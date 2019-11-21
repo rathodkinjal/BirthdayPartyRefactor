@@ -4,11 +4,67 @@
 package scrap.heap.refactor;
 
 import org.junit.Test;
+import scrap.heap.refactor.party.Balloon;
+import scrap.heap.refactor.party.Cake;
+import scrap.heap.refactor.party.BirthdayParty;
+
 import static org.junit.Assert.*;
 
 public class AppTest {
-    @Test public void testAppHasAGreeting() {
+    @Test
+    public void testAppHasAGreeting() {
         App classUnderTest = new App();
-        assertNotNull("app should have a greeting", classUnderTest.getGreeting());
+        assertNotNull("Hello world.", classUnderTest.getGreeting());
+    }
+
+    @Test
+    public void testBirthdayPartyOrder() {
+        App classUnderTest = new App();
+        assertEquals("Balloons ordered: red, mylar, 4\n" +
+                "cake ordered: chocolate, chocolate, circle, large, brown", classUnderTest.birthdayPartyOrder(1));
+    }
+
+    @Test
+    public void testPartyDescription() {
+        Balloon balloon = getTestBallon();
+        Cake cake = getTestCake();
+        BirthdayParty testBirthdayParty = new BirthdayParty.Builder().ballon(balloon).cake(cake).order();
+
+        assertEquals("Balloons ordered: red, mylar, 4\n" +
+                "cake ordered: chocolate, chocolate, circle, large, brown", testBirthdayParty.getDescription());
+    }
+
+    @Test
+    public void testCakeDescription() {
+        Cake cake = getTestCake();
+        assertEquals("cake ordered: chocolate, chocolate, circle, large, brown", cake.getDescription());
+    }
+
+    @Test
+    public void testBallonDescription() {
+        Balloon balloon = getTestBallon();
+        assertEquals("Balloons ordered: red, mylar, 4", balloon.getDescription());
+    }
+
+    public Balloon getTestBallon() {
+        Balloon balloon = new Balloon.Builder()
+                .color(Balloon.Color.RED).material(Balloon.Material.MYLAR)
+                .count(4)
+                .build();
+
+        return balloon;
+    }
+
+    public Cake getTestCake() {
+
+        Cake cake = new Cake.Builder()
+                .flavor(Cake.Flavor.CHOCOLATE)
+                .frostingFlavor(Cake.FrostingFlavor.CHOCOLATE)
+                .shape(Cake.Shape.CIRCLE)
+                .size(Cake.Size.LARGE)
+                .color(Cake.Color.BROWN)
+                .build();
+
+        return cake;
     }
 }
